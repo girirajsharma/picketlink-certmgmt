@@ -18,6 +18,7 @@
 package org.picketlink.certmgmt.server.api;
 
 import org.picketlink.certmgmt.server.CertificateGeneration;
+import org.picketlink.certmgmt.server.idm.PicketLinkIDMConfigurationBuilder;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.config.IdentityConfigurationBuilder;
 import org.picketlink.idm.config.IdentityStoreConfiguration;
@@ -60,7 +61,7 @@ public class PicketLinkCertificateManagement {
             defaultPartitionManager = new DefaultPartitionManager(identityConfigurationBuilder.buildAll());
             defaultPartitionManager.add(partition, "ldap.config");
         }
-        
+
         identityManager = defaultPartitionManager.createIdentityManager(partition);
     }
 
@@ -89,7 +90,6 @@ public class PicketLinkCertificateManagement {
      * @throws java.security.cert.CertificateException
      */
     public boolean store(X509Certificate x509Certificate) throws CertificateException {
-     // use identitymanager to store
         User user = new User(x509Certificate.getPublicKey().toString());
         user.setAttribute(new Attribute<X509Certificate>("X509Certificate", x509Certificate));
         identityManager.add(user);
@@ -103,10 +103,12 @@ public class PicketLinkCertificateManagement {
      * @return
      * @throws java.security.cert.CertificateException
      */
-    public Attribute<X509Certificate> get(String key) throws CertificateException {
+    public X509Certificate get(String key) throws CertificateException {
         User user = BasicModel.getUser(identityManager, key);
         if (user != null) {
-            return user.getAttribute("X509Certificate");
+            Object X509CertificateObject = user.getAttribute("X509Certificate");
+            X509Certificate x509Certificate = (X509Certificate) X509CertificateObject;
+            return x509Certificate;
         }
         return null;
     }
@@ -121,7 +123,6 @@ public class PicketLinkCertificateManagement {
      * @throws java.security.cert.CertificateException
      */
     public boolean update(String key, X509Certificate x509Certificate) throws CertificateException {
-        // Use identitymanager to update the certificate
         User user = BasicModel.getUser(identityManager, key);
         if (user != null) {
             user.setAttribute(new Attribute<X509Certificate>("X509Certificate", x509Certificate));
