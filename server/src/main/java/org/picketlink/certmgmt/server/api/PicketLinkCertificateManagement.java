@@ -36,7 +36,7 @@ import java.security.cert.X509Certificate;
 
 /**
  * API Class to use for CRUD of X509 Certificates
- * 
+ *
  * @author Anil Saldhana
  * @since March 17, 2014
  */
@@ -67,7 +67,7 @@ public class PicketLinkCertificateManagement {
 
     /**
      * Create a {@link java.security.cert.X509Certificate}
-     * 
+     *
      * @param keyPair
      * @param numberOfDays number of days of validity
      * @param DN
@@ -84,7 +84,7 @@ public class PicketLinkCertificateManagement {
 
     /**
      * Store a {@link java.security.cert.X509Certificate} in the data store
-     * 
+     *
      * @param x509Certificate
      * @return
      * @throws java.security.cert.CertificateException
@@ -98,7 +98,7 @@ public class PicketLinkCertificateManagement {
 
     /**
      * Given a key, return the {@link java.security.cert.X509Certificate}
-     * 
+     *
      * @param key
      * @return
      * @throws java.security.cert.CertificateException
@@ -116,7 +116,7 @@ public class PicketLinkCertificateManagement {
     /**
      * Given a key and a new {@link java.security.cert.X509Certificate}, update the previously stored
      * {@link java.security.cert.X509Certificate}
-     * 
+     *
      * @param key
      * @param x509Certificate
      * @return true if the update was successful
@@ -134,7 +134,7 @@ public class PicketLinkCertificateManagement {
 
     /**
      * Delete a {@link java.security.cert.X509Certificate}
-     * 
+     *
      * @param key
      * @return
      * @throws CertificateException

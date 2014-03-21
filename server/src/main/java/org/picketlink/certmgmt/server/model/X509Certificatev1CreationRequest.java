@@ -29,7 +29,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  * Object for representing X509 Certificate version1 Creation request
- * 
+ *
  * @author Giriraj Sharma
  * @since Jan 21, 2014
  */

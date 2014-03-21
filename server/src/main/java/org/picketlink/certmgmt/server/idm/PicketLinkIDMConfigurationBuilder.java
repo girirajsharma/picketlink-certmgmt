@@ -39,7 +39,7 @@ import org.picketlink.internal.EEJPAContextInitializer;
 
 /**
  * API Class to use for CRUD of X509 Certificates
- * 
+ *
  * @author Giriraj Sharma
  * @since March 20, 2014
  */
