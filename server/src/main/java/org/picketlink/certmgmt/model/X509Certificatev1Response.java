@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.picketlink.certmgmt.server.model;
+package org.picketlink.certmgmt.model;
 
 import java.io.Serializable;
 
@@ -35,26 +35,26 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
  */
 @XmlRootElement
 @JsonSerialize
-public class X509Certificatev1CreationResponse implements Serializable {
+public class X509Certificatev1Response implements Serializable {
     private static final long serialVersionUID = -973696117016631846L;
 
-    private boolean created;
-    private String status;
+    private String state;
+    private int status;
 
-    public String getStatus() {
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
-    }
-
-    public boolean isCreated() {
-        return created;
-    }
-
-    public void setCreated(boolean created) {
-        this.created = created;
     }
 
 }

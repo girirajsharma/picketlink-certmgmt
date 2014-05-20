@@ -15,10 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.picketlink.certmgmt.server.api;
+package org.picketlink.certmgmt.api;
 
-import org.picketlink.certmgmt.server.CertificateGeneration;
-import org.picketlink.certmgmt.server.idm.PicketLinkIDMConfigurationBuilder;
+import java.security.KeyPair;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import org.picketlink.certmgmt.CertificateGeneration;
+import org.picketlink.certmgmt.idm.PicketLinkIDMConfigurationBuilder;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.config.IdentityConfigurationBuilder;
 import org.picketlink.idm.config.IdentityStoreConfiguration;
@@ -29,10 +33,6 @@ import org.picketlink.idm.model.Attribute;
 import org.picketlink.idm.model.basic.BasicModel;
 import org.picketlink.idm.model.basic.Realm;
 import org.picketlink.idm.model.basic.User;
-
-import java.security.KeyPair;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 
 /**
  * API Class to use for CRUD of X509 Certificates
