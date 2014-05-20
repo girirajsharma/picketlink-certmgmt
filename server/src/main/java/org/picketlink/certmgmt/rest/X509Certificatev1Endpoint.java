@@ -17,8 +17,15 @@
  */
 package org.picketlink.certmgmt.rest;
 
-import java.security.KeyPair;
-import java.security.cert.Certificate;
+import org.picketlink.certmgmt.CertificateGeneration;
+import org.picketlink.certmgmt.api.PicketLinkCertificateManagement;
+import org.picketlink.certmgmt.model.X509Certificatev1CreationRequest;
+import org.picketlink.certmgmt.model.X509Certificatev1DetailResponse;
+import org.picketlink.certmgmt.model.X509Certificatev1Response;
+import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.model.Attribute;
+import org.picketlink.idm.model.basic.BasicModel;
+import org.picketlink.idm.model.basic.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,17 +37,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.picketlink.certmgmt.CertificateGeneration;
-import org.picketlink.certmgmt.api.PicketLinkCertificateManagement;
-import org.picketlink.certmgmt.model.X509Certificatev1CreationRequest;
-import org.picketlink.certmgmt.model.X509Certificatev1DetailResponse;
-import org.picketlink.certmgmt.model.X509Certificatev1Response;
-import org.picketlink.idm.IdentityManager;
-import org.picketlink.idm.config.IdentityStoreConfiguration;
-import org.picketlink.idm.model.Attribute;
-import org.picketlink.idm.model.basic.BasicModel;
-import org.picketlink.idm.model.basic.User;
+import java.security.KeyPair;
+import java.security.cert.Certificate;
 
 ///**
 // * Endpoint for User Account Registration
@@ -54,8 +52,11 @@ public class X509Certificatev1Endpoint {
 
     @Inject
     private IdentityManager identityManager;
-    private IdentityStoreConfiguration identityStoreConfiguration;
+
+    @Inject
     private PicketLinkCertificateManagement picketLinkCertificateManagement;
+
+    @Inject
     private CertificateGeneration certificateGeneration;
 
     // /**
@@ -70,9 +71,6 @@ public class X509Certificatev1Endpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response create(X509Certificatev1CreationRequest request) throws Exception {
-
-        picketLinkCertificateManagement = new PicketLinkCertificateManagement(identityStoreConfiguration);
-        certificateGeneration = new CertificateGeneration();
         X509Certificatev1Response response = new X509Certificatev1Response();
 
         String alias = request.getAlias();
@@ -93,7 +91,7 @@ public class X509Certificatev1Endpoint {
             KeyPair keyPair = certificateGeneration.generateKeyPair("RSA");
             Certificate cert = picketLinkCertificateManagement.create(keyPair, Integer.parseInt(days), subjectDN, version);
 
-            user.setAttribute(new Attribute<String>("keyPair", String.valueOf(keyPair)));
+            user.setAttribute(new Attribute<String>("keyPair", keyPair)));
             user.setAttribute(new Attribute<String>("certificate", String.valueOf(cert)));
 
             this.identityManager.add(user);
@@ -112,9 +110,6 @@ public class X509Certificatev1Endpoint {
     @Path("/{keyPassword}")
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1DetailResponse get(@PathParam("keyPassword") String keyPassword) {
-
-        picketLinkCertificateManagement = new PicketLinkCertificateManagement(identityStoreConfiguration);
-        certificateGeneration = new CertificateGeneration();
         X509Certificatev1DetailResponse response = new X509Certificatev1DetailResponse();
         User user = BasicModel.getUser(identityManager, keyPassword);
         if (user == null) {
@@ -142,9 +137,6 @@ public class X509Certificatev1Endpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response update(X509Certificatev1CreationRequest request) throws Exception {
-
-        picketLinkCertificateManagement = new PicketLinkCertificateManagement(identityStoreConfiguration);
-        certificateGeneration = new CertificateGeneration();
         X509Certificatev1Response response = new X509Certificatev1Response();
         String alias = request.getAlias();
         String subjectDN = request.getSubjectDN();
@@ -180,9 +172,6 @@ public class X509Certificatev1Endpoint {
     @Path("/{keyPassword}")
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response delete(@PathParam("keyPassword") String keyPassword) throws Exception {
-
-        picketLinkCertificateManagement = new PicketLinkCertificateManagement(identityStoreConfiguration);
-        certificateGeneration = new CertificateGeneration();
         X509Certificatev1Response response = new X509Certificatev1Response();
         User user = BasicModel.getUser(identityManager, keyPassword);
         if (user == null) {
