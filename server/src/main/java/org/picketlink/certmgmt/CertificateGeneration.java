@@ -17,17 +17,6 @@
  */
 package org.picketlink.certmgmt;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.math.BigInteger;
-import java.security.GeneralSecurityException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.SecureRandom;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.util.Date;
-
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -46,12 +35,25 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
 
+import javax.enterprise.context.ApplicationScoped;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.math.BigInteger;
+import java.security.GeneralSecurityException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.util.Date;
+
 /**
  * Utility class using BouncyCastle to deal with {@link Certificate} operations
  *
  * @author anil saldhana
  * @since Aug 16, 2012
  */
+@ApplicationScoped
 public class CertificateGeneration {
 
     private static SecureRandom random = new SecureRandom();

@@ -17,22 +17,16 @@
  */
 package org.picketlink.certmgmt.api;
 
+import org.picketlink.certmgmt.CertificateGeneration;
+import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.model.Attribute;
+import org.picketlink.idm.model.basic.BasicModel;
+import org.picketlink.idm.model.basic.User;
+
+import javax.inject.Inject;
 import java.security.KeyPair;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-
-import org.picketlink.certmgmt.CertificateGeneration;
-import org.picketlink.certmgmt.idm.PicketLinkIDMConfigurationBuilder;
-import org.picketlink.idm.IdentityManager;
-import org.picketlink.idm.config.IdentityConfigurationBuilder;
-import org.picketlink.idm.config.IdentityStoreConfiguration;
-import org.picketlink.idm.config.JPAIdentityStoreConfiguration;
-import org.picketlink.idm.config.LDAPIdentityStoreConfiguration;
-import org.picketlink.idm.internal.DefaultPartitionManager;
-import org.picketlink.idm.model.Attribute;
-import org.picketlink.idm.model.basic.BasicModel;
-import org.picketlink.idm.model.basic.Realm;
-import org.picketlink.idm.model.basic.User;
 
 /**
  * API Class to use for CRUD of X509 Certificates
@@ -42,28 +36,11 @@ import org.picketlink.idm.model.basic.User;
  */
 public class PicketLinkCertificateManagement {
 
-    private CertificateGeneration certificateGeneration = new CertificateGeneration();
-    private PicketLinkIDMConfigurationBuilder picketLinkIDMConfigurationBuilder;
-    private IdentityConfigurationBuilder identityConfigurationBuilder;
-    private DefaultPartitionManager defaultPartitionManager;
+    @Inject
+    private CertificateGeneration certificateGeneration;
+
+    @Inject
     private IdentityManager identityManager;
-    private Realm partition = new Realm("partition");
-
-    public PicketLinkCertificateManagement(IdentityStoreConfiguration identityStoreConfiguration) {
-
-        if (identityStoreConfiguration instanceof JPAIdentityStoreConfiguration) {
-            identityConfigurationBuilder = picketLinkIDMConfigurationBuilder.produceJPAConfigurationBuilder();
-            defaultPartitionManager = new DefaultPartitionManager(identityConfigurationBuilder.buildAll());
-            defaultPartitionManager.add(partition, "jpa.config");
-
-        } else if (identityStoreConfiguration instanceof LDAPIdentityStoreConfiguration) {
-            identityConfigurationBuilder = picketLinkIDMConfigurationBuilder.produceLDAPConfigurationBuilder();
-            defaultPartitionManager = new DefaultPartitionManager(identityConfigurationBuilder.buildAll());
-            defaultPartitionManager.add(partition, "ldap.config");
-        }
-
-        identityManager = defaultPartitionManager.createIdentityManager(partition);
-    }
 
     /**
      * Create a {@link java.security.cert.X509Certificate}
