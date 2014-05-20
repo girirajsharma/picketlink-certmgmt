@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" ng-app="picketlinkApp">
+<head>
+  <meta charset="utf-8">
+  <title>PicketLink Certficate Management</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body ng-controller="PicketlinkListCtrl">
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span2">
+        <!--Sidebar content-->
+
+        Search: <input ng-model="query">
+        Sort by:
+        <select ng-model="orderProp">
+          <option value="name">Alphabetical</option>
+          <option value="age">Newest</option>
+        </select>
+
+      </div>
+      <div class="span10">
+        <!--Body content-->
+
+        <ul class="picketlinkFeatures">
+          <li ng-repeat="picketlinkFeature in picketlinkFeatures | filter:query | orderBy:orderProp">
+            {{picketlinkFeature.name}}
+            <p>{{picketlinkFeature.snippet}}</p>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+  
+  <!--Required Angular JS Files List :start -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/bootstrap/ui-bootstrap-tpls-0.5.0.min.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
+    <!--Required Angular JS Files List :end -->
+
+</body>
+</html>
