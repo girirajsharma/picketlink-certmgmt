@@ -1,46 +1,97 @@
-<!doctype html>
-<html lang="en" ng-app="picketlinkApp">
-<head>
-  <meta charset="utf-8">
-  <title>PicketLink Certficate Management</title>
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/bootstrap.css">
-</head>
-<body ng-controller="PicketlinkListCtrl">
+<!DOCTYPE html>
+<html lang="en" ng-app="picketlinkCertMgmtApp">
+  <head>
+    <meta charset="utf-8">
+    <title>PicketLink Certificate Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PicketLink OAuth Provider">
+    <meta name="author" content="PicketLink Open Source">
 
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span2">
-        <!--Sidebar content-->
+    <!-- Le styles -->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="jsp/twitter-bootstrap-v2/docs/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="jsp/twitter-bootstrap-v2/docs/assets/css/example-fluid-layout.css" rel="stylesheet">
+    <link href="jsp/twitter-bootstrap-v2/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-        Search: <input ng-model="query">
-        Sort by:
-        <select ng-model="orderProp">
-          <option value="name">Alphabetical</option>
-          <option value="age">Newest</option>
-        </select>
-
-      </div>
-      <div class="span10">
-        <!--Body content-->
-
-        <ul class="picketlinkFeatures">
-          <li ng-repeat="picketlinkFeature in picketlinkFeatures | filter:query | orderBy:orderProp">
-            {{picketlinkFeature.name}}
-            <p>{{picketlinkFeature.snippet}}</p>
-          </li>
-        </ul>
-
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="twitter-bootstrap-v2/docs/examples/images/favicon.ico">
+    <link rel="apple-touch-icon" href="twitter-bootstrap-v2/docs/examples/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="twitter-bootstrap-v2/docs/examples/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="twitter-bootstrap-v2/docs/examples/images/apple-touch-icon-114x114.png">
+    
+    <script src="lib/jquery/jquery-1.10.2.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-animate.js"></script>
+    <script src="lib/angular/angular-resource.js"></script>
+    <script src="lib/angular/angular-route.js"></script>
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="picketlink.html"><img src="http://design.jboss.org/picketlink/logo/images/picketlink_logo_100x.png" width="111" height="30" alt="PicketLink logo" /></a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="picketlink.html">Home</a></li>
+            </ul>
+            <p class="navbar-text pull-right">Not Logged in!</a></p>
+          </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
-  </div>
-  
-  <!--Required Angular JS Files List :start -->
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/bootstrap/ui-bootstrap-tpls-0.5.0.min.js"></script>
-    <script src="js/controllers.js"></script>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Register</li>
+              <li class="active"><a href="picketlink-login.html">Login</a></li>
+              <li><a href="picketlink-accnt-reg.html">Register</a></li>
+              <li class="nav-header">Help</li>
+              <li><a href="#">Quickstarts</a></li>
+           </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="view-container">
+            <div ng-view class="view-frame"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/jquery.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-transition.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-alert.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-modal.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-dropdown.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-tab.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-tooltip.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-popover.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-button.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-collapse.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-carousel.js"></script>
+    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-typeahead.js"></script>
+    
     <script src="js/app.js"></script>
-    <!--Required Angular JS Files List :end -->
+    <script src="js/animations.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/services.js"></script>
 
-</body>
+  </body>
 </html>
