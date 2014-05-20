@@ -1,0 +1,65 @@
+        <div class="span9">
+          <div class="leaderboard">
+            <h1>PicketLink Certificate Management</h1>
+               <form  name="userForm" ng-controller="CreateCertificateController" ng-submit="create()" invalidate>
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+                    <fieldset>
+                        <legend> Create X509 Version1 Certificate</legend>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Alias</label>
+                                    <input ng-class="{error: userForm.alias.$dirty && userForm.alias.$invalid}" type="text" placeholder="Alias" name="alias" ng-model="alias" ng-minlength=3 ng-maxlength=20 required ng-focus />
+                                    <div class="error-container" ng-show="userForm.alias.$dirty && userForm.alias.$invalid  && !userForm.alias.$focused">
+                                        <small class="error" ng-show="userForm.alias.$error.required">Your alias is required.</small>
+                                        <small class="error" ng-show="userForm.alias.$error.minlength">Your alias is required to be at least 3 characters</small>
+                                        <small class="error" ng-show="userForm.alias.$error.maxlength">Your alias cannot be longer than 20 characters</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Subject DN</label>
+                                    <input ng-class="{error: userForm.subjectDN.$dirty && userForm.subjectDN.$invalid}" type="text" placeholder="Subject DN" name="subjectDN" ng-model="subjectDN" required ng-focus/>
+                                    <div class="error-container" ng-show="userForm.subjectDN.$dirty && userForm.subjectDN.$invalid && !userForm.subjectDN.$focused">
+                                        <small class="error" ng-show="userForm.subjectDN.$error.required">Your Subject DN is required.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Key Password</label>
+                                    <input ng-class="{error: userForm.keyPassword.$dirty && userForm.keyPassword.$invalid}" type="text" placeholder="Key Password" name="keyPassword" ng-model="keyPassword" required ng-focus />
+                                    <div class="error-container" ng-show="userForm.keyPassword.$dirty && userForm.keyPassword.$invalid && !userForm.keyPassword.$focused">
+                                        <small class="error" ng-show="userForm.keyPassword.$error.required">Your key Password is required.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Validity Days</label>
+                                    <input ng-class="{error: userForm.validity.$dirty && userForm.validity.$invalid}" type="number" placeholder="Number of days of Validity" name="validity" ng-model="validity" required ng-focus/>
+                                    <div class="error-container" ng-show="userForm.validity.$dirty && userForm.validity.$invalid && !userForm.validity.$focused">
+                                        
+                                        <!-- Check if error msg appears in case input is non-numeric -->
+                                        <small class="error" ng-show="userForm.validity.$error.required">Your Validation Period is required.</small>
+                                        <small class="error" ng-show="userForm.validity.$error.invalid">Your Validation Period must be a number.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+                            <button type="reset" class="btn btn-primary">Reset</button>
+                        </fieldset>
+                       </form>
+                    </div>
+                    </div>
+                    </div>
+          <div class="row-fluid">
+          </div><!--/row-->
+          <hr>
+     <footer>
+        <p>&copy; PicketLink, Open Source Project from JBoss Community.</p>
+      </footer>
+    </div><!--/.fluid-container-->

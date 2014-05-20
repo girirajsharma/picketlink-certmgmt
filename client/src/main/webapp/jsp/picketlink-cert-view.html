@@ -1,0 +1,27 @@
+        <div class="span9">
+          <div class="leaderboard">
+            <h1>PicketLink Certificate Management</h1>
+               <form  name="userForm" ng-controller="CertificateController" ng-submit="viewCertificate()" invalidate>
+                    <fieldset>
+                        <legend> Create X509 Version1 Certificate</legend>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Alias</label>
+                                    <input ng-class="{error: userForm.alias.$dirty && userForm.alias.$invalid}" type="text" placeholder="KeyPassword" name="alias" ng-model="keyPassword"  required ng-focus />
+                                    <div class="error-container" ng-show="userForm.alias.$dirty && userForm.alias.$invalid  && !userForm.alias.$focused">
+                                        <small class="error" ng-show="userForm.alias.$error.required">Your keyPassword is required.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success" ng-disabled="userForm.$invalid">Submit</button>                        
+                            </fieldset>
+                       </form>
+                    </div>
+                    </div>
+          <div class="row-fluid">
+          </div><!--/row-->
+          <hr>
+     <footer>
+        <p>&copy; PicketLink, Open Source Project from JBoss Community.</p>
+      </footer>
+    </div><!--/.fluid-container-->
