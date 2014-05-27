@@ -209,13 +209,12 @@ public class X509Certificatev1Endpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response delete(@PathParam("keyPassword") String keyPassword) throws Exception {
         X509Certificatev1Response response = new X509Certificatev1Response();
-        String saltedPassword = certificateUtil.saltedHmacMD5("salt", (new String(keyPassword)).getBytes());
-        User user = BasicModel.getUser(identityManager, saltedPassword);
+        User user = BasicModel.getUser(identityManager, keyPassword);
         if (user == null) {
             response.setStatus(400);
             return response;
         }
-        picketLinkCertificateManagement.delete(saltedPassword);
+        picketLinkCertificateManagement.delete(keyPassword);
         response.setStatus(200);
         response.setState("DELETED");
         return response;
