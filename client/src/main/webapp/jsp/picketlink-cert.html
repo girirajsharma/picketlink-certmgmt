@@ -1,0 +1,54 @@
+        <div class="span9" ng-show="state">
+          <div class="leaderboard">
+            <h1>PicketLink Certificate Management</h1>
+               <form  name="userForm" ng-controller="ViewCertificateController" ng-submit="deleteCertificate()" invalidate>
+                    <fieldset>
+                        <legend> Create X509 Version1 Certificate</legend>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <p class="text-primary">Label : <p class="text-muted">{{Certificate.alias}}</p></p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <p class="text-primary">Subject DN : <p class="text-muted">{{Certificate.subjectDN}}</p></p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <p class="text-primary">Key Password : <p class="text-muted">{{Certificate.keyPassword}}</p></p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <p class="text-primary">Number of Validity  Days : <p class="text-muted">{{Certificate.validity}}</p></p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <p class="text-primary">KeyPair : <p class="text-muted">{{Certificate.keyPair}}</p></p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <p class="text-primary">X509v1Certificate : <p class="text-muted">{{Certificate.certificate}}</p></p>
+                                </div>
+                            </div>
+                            <a class="btn btn-success btn-large" href="#/edit">Edit</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </fieldset>
+                       </form>
+                    </div>
+                    </div>
+          <div class="row-fluid">
+          </div><!--/row-->
+          <hr>
+      <footer>
+        <p>&copy; PicketLink, Open Source Project from JBoss Community.</p>
+      </footer>
+    </div><!--/.fluid-container-->
