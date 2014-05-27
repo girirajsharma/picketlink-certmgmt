@@ -22,7 +22,7 @@
 package org.picketlink.certmgmt.model;
 
 import java.io.Serializable;
-import java.security.KeyPair;
+import java.security.Key;
 import java.security.cert.Certificate;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,7 +31,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  * Object for representing X509 Certificate version1 Creation request
- *
+ * 
  * @author Giriraj Sharma
  * @since Jan 21, 2014
  */
@@ -42,7 +42,26 @@ public class X509Certificatev1DetailResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int status;
+
+    public Key getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(Key publicKey) {
+        this.publicKey = publicKey;
+    }
+
+    public Key getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(Key privateKey) {
+        this.privateKey = privateKey;
+    }
+
     private String alias, subjectDN, numberOfDaysOfValidity, keyPassword;
+    private Key publicKey, privateKey;
+    private Certificate X509Certificatev1;
 
     public String getAlias() {
         return alias;
@@ -76,14 +95,6 @@ public class X509Certificatev1DetailResponse implements Serializable {
         this.keyPassword = keyPassword;
     }
 
-    public KeyPair getKeyPair() {
-        return keyPair;
-    }
-
-    public void setKeyPair(KeyPair keyPair) {
-        this.keyPair = keyPair;
-    }
-
     public Certificate getX509Certificatev1() {
         return X509Certificatev1;
     }
@@ -99,7 +110,4 @@ public class X509Certificatev1DetailResponse implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    private KeyPair keyPair;
-    private Certificate X509Certificatev1;
 }
