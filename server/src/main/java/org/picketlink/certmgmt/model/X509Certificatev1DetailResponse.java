@@ -28,10 +28,11 @@ import java.security.cert.Certificate;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.picketlink.certmgmt.model.enums.ResponseStatus;
 
 /**
  * Object for representing X509 Certificate version1 Creation request
- * 
+ *
  * @author Giriraj Sharma
  * @since Jan 21, 2014
  */
@@ -42,6 +43,11 @@ public class X509Certificatev1DetailResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int status;
+    private ResponseStatus responseStatus;
+    private int numberOfDaysOfValidity;
+    private String alias, subjectDN, keyPassword;
+    private Key publicKey, privateKey;
+    private Certificate X509Certificatev1;
 
     public Key getPublicKey() {
         return publicKey;
@@ -59,10 +65,6 @@ public class X509Certificatev1DetailResponse implements Serializable {
         this.privateKey = privateKey;
     }
 
-    private String alias, subjectDN, numberOfDaysOfValidity, keyPassword;
-    private Key publicKey, privateKey;
-    private Certificate X509Certificatev1;
-
     public String getAlias() {
         return alias;
     }
@@ -79,11 +81,11 @@ public class X509Certificatev1DetailResponse implements Serializable {
         this.subjectDN = subjectDN;
     }
 
-    public String getNumberOfDaysOfValidity() {
+    public int getNumberOfDaysOfValidity() {
         return numberOfDaysOfValidity;
     }
 
-    public void setNumberOfDaysOfValidity(String numberOfDaysOfValidity) {
+    public void setNumberOfDaysOfValidity(int numberOfDaysOfValidity) {
         this.numberOfDaysOfValidity = numberOfDaysOfValidity;
     }
 
@@ -101,6 +103,14 @@ public class X509Certificatev1DetailResponse implements Serializable {
 
     public void setX509Certificatev1(Certificate x509Certificatev1) {
         X509Certificatev1 = x509Certificatev1;
+    }
+
+    public ResponseStatus getResponseStatus() {
+        return responseStatus;
+    }
+
+    public void setResponseStatus(ResponseStatus responseStatus) {
+        this.responseStatus = responseStatus;
     }
 
     public int getStatus() {

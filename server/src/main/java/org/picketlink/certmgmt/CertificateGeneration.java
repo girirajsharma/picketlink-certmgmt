@@ -17,6 +17,19 @@
  */
 package org.picketlink.certmgmt;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.math.BigInteger;
+import java.security.GeneralSecurityException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.util.Date;
+
+import javax.enterprise.context.ApplicationScoped;
+
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -34,18 +47,6 @@ import org.bouncycastle.operator.bc.BcRSAContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
-
-import javax.enterprise.context.ApplicationScoped;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.math.BigInteger;
-import java.security.GeneralSecurityException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.SecureRandom;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.util.Date;
 
 /**
  * Utility class using BouncyCastle to deal with {@link Certificate} operations
@@ -88,7 +89,7 @@ public class CertificateGeneration {
 
             BigInteger serialNum = createSerialNumber();
             X509v1CertificateBuilder v1CertGen = new X509v1CertificateBuilder(name, serialNum, startDate, endDate, name,
-                    subPubKeyInfo);
+                subPubKeyInfo);
 
             X509CertificateHolder certificateHolder = v1CertGen.build(sigGen);
             return new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateHolder);

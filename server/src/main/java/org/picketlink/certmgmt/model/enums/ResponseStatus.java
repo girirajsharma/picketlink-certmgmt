@@ -15,19 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.picketlink.certmgmt.setup;
+package org.picketlink.certmgmt.model.enums;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+public enum ResponseStatus {
+    CREATED, FETCHED, UPDATED, FAILED, LOADED_AND_STORED, DELETED;
 
-/**
- * Activate JAX-RS
- *
- * @author Giriraj Sharma
- * @since May 20, 2014
- */
-@ApplicationPath("/")
-@ApplicationScoped
-public class RESTActivation extends Application {
 }
