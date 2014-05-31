@@ -19,10 +19,12 @@ package org.picketlink.certmgmt.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class Person implements Serializable {
 
     /**

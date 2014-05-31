@@ -75,7 +75,15 @@ public class X509Certificatev1Endpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1DetailResponse get(@PathParam("keyPassword") String keyPassword) throws InvalidKeyException,
             NoSuchAlgorithmException {
-        X509Certificatev1DetailResponse response = this.identityModelManager.getMyUser(keyPassword, identityManager);
+        X509Certificatev1DetailResponse response = new X509Certificatev1DetailResponse();
+        // Agent myUser = BasicModel.getAgent(identityManager, keyPassword);
+        MyUser myUser = this.identityModelManager.findByKeyPassword(keyPassword, identityManager);
+        if (myUser == null) {
+            response.setStatus(400);
+            response.setResponseStatus(ResponseStatus.FAILED);
+            return response;
+        }
+        response = this.identityModelManager.getMyUser(myUser, keyPassword);
         response.setStatus(200);
         response.setResponseStatus(ResponseStatus.FETCHED);
         return response;
@@ -109,7 +117,7 @@ public class X509Certificatev1Endpoint {
         MyUser myUser = this.identityModelManager.findByKeyPassword(keyPassword, identityManager);
         if (myUser == null) {
             response.setStatus(400);
-            response.setResponseStatus(ResponseStatus.UPDATED);
+            response.setResponseStatus(ResponseStatus.FAILED);
             return response;
         }
         this.identityManager.remove(myUser);

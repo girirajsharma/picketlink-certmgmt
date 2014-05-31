@@ -21,7 +21,6 @@ import org.picketlink.idm.model.AbstractIdentityType;
 import org.picketlink.idm.model.Account;
 import org.picketlink.idm.model.annotation.AttributeProperty;
 import org.picketlink.idm.model.annotation.Unique;
-import org.picketlink.idm.query.AttributeParameter;
 import org.picketlink.idm.query.QueryParameter;
 
 public class MyUser extends AbstractIdentityType implements Account {
@@ -29,7 +28,6 @@ public class MyUser extends AbstractIdentityType implements Account {
      *
      */
     private static final long serialVersionUID = 1L;
-    public static final AttributeParameter ALIAS = QUERY_ATTRIBUTE.byName("alias");
     public static final QueryParameter KEYPASSWORD = QUERY_ATTRIBUTE.byName("keyPassword");
 
     @AttributeProperty

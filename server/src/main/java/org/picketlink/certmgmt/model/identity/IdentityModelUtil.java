@@ -41,18 +41,4 @@ public class IdentityModelUtil {
         }
         return null;
     }
-
-    public MyUser findUserByAlias(String alias, IdentityManager identityManager) {
-        if (alias == null) {
-            throw new IllegalArgumentException("Invalid alias.");
-        }
-
-        IdentityQuery<MyUser> query = identityManager.createIdentityQuery(MyUser.class);
-        List<MyUser> result = query.setParameter(MyUser.ALIAS, alias).getResultList();
-
-        if (!result.isEmpty()) {
-            return result.get(0);
-        }
-        return null;
-    }
 }

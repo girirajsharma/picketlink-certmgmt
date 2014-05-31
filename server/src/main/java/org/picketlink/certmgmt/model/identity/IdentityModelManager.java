@@ -49,28 +49,28 @@ import org.picketlink.idm.model.Account;
 import org.picketlink.idm.model.basic.BasicModel;
 import org.picketlink.idm.model.basic.Role;
 
-/**
- * <p>
- * This class provides an abstraction point to the Identity Management operations required by the application./p>
- *
- * <p>
- * The main objective of this class is avoid the spread use of the <code>IdentityManager</code> by different components of the
- * application and code duplication, providing a centralized point of access for the most common operations like
- * create/update/query users and so forth.
- * </p>
- *
- * <p>
- * Also it is very useful to understand how PicketLink Identity Management is being used and what is being used by the
- * application from a IDM perspective.
- * </p>
- *
- * <p>
- * Please note that PicketLink IDM provides a very flexible and poweful identity model and API, from which you can extend and
- * fulfill your own requirements.
- * </p>
- *
- * @author Pedro Igor
- */
+///**
+// * <p>
+// * This class provides an abstraction point to the Identity Management operations required by the application./p>
+// *
+// * <p>
+// * The main objective of this class is avoid the spread use of the <code>IdentityManager</code> by different components of the
+// * application and code duplication, providing a centralized point of access for the most common operations like
+// * create/update/query users and so forth.
+// * </p>
+// *
+// * <p>
+// * Also it is very useful to understand how PicketLink Identity Management is being used and what is being used by the
+// * application from a IDM perspective.
+// * </p>
+// *
+// * <p>
+// * Please note that PicketLink IDM provides a very flexible and poweful identity model and API, from which you can extend and
+// * fulfill your own requirements.
+// * </p>
+// *
+// * @author Pedro Igor
+// */
 @Stateless
 public class IdentityModelManager {
 
@@ -125,13 +125,8 @@ public class IdentityModelManager {
         return newUser;
     }
 
-    public X509Certificatev1DetailResponse getMyUser(String keyPassword, IdentityManager identityManager) {
+    public X509Certificatev1DetailResponse getMyUser(MyUser myUser, String keyPassword) {
         X509Certificatev1DetailResponse response = new X509Certificatev1DetailResponse();
-        MyUser myUser = findByKeyPassword(keyPassword, identityManager);
-        if (myUser == null) {
-            response.setStatus(400);
-            return response;
-        }
 
         Person person = myUser.getPerson();
         response.setSubjectDN(person.getSubjectDN());
@@ -211,11 +206,7 @@ public class IdentityModelManager {
         BasicModel.grantRole(this.relationshipManager, account, storedRole);
     }
 
-    public MyUser findByLoginName(String alias, IdentityManager identityManager) {
-        return identityModelUtil.findUserByAlias(alias, identityManager);
-    }
-
     public MyUser findByKeyPassword(String keyPassword, IdentityManager identityManager) {
-        return identityModelUtil.findUserByAlias(keyPassword, identityManager);
+        return identityModelUtil.findUserByKeyPassword(keyPassword, identityManager);
     }
 }
