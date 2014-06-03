@@ -23,6 +23,7 @@ package org.picketlink.certmgmt.setup;
 
 import org.picketlink.certmgmt.model.MyUser;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.credential.Password;
 
 import javax.annotation.PostConstruct;
@@ -38,16 +39,18 @@ import javax.inject.Inject;
 public class PicketLinkInitializer {
 
     @Inject
-    private IdentityManager identityManager;
+    private PartitionManager partitionManager;
 
     @PostConstruct
     public void init() {
+        IdentityManager identityManager = this.partitionManager.createIdentityManager();
+
         MyUser admin = new MyUser("admin");
 
-        this.identityManager.add(admin);
+        identityManager.add(admin);
 
         Password password = new Password("admin");
 
-        this.identityManager.updateCredential(admin, password);
+        identityManager.updateCredential(admin, password);
     }
 }
