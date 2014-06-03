@@ -17,13 +17,11 @@
  */
 package org.picketlink.certmgmt.model;
 
-import org.picketlink.idm.model.AbstractIdentityType;
-import org.picketlink.idm.model.Account;
 import org.picketlink.idm.model.annotation.AttributeProperty;
-import org.picketlink.idm.model.annotation.Unique;
+import org.picketlink.idm.model.basic.User;
 import org.picketlink.idm.query.QueryParameter;
 
-public class MyUser extends AbstractIdentityType implements Account {
+public class MyUser extends User {
     /**
      *
      */
@@ -31,18 +29,17 @@ public class MyUser extends AbstractIdentityType implements Account {
     public static final QueryParameter KEYPASSWORD = QUERY_ATTRIBUTE.byName("keyPassword");
 
     @AttributeProperty
-    @Unique
     private String keyPassword;
 
     @AttributeProperty
     private Person person;
 
-    public MyUser() {
+    private MyUser() {
         this(null);
     }
 
-    public MyUser(String keyPassword) {
-        this.keyPassword = keyPassword;
+    public MyUser(String loginName) {
+        super(loginName);
     }
 
     public String getKeyPassword() {

@@ -17,8 +17,14 @@
  */
 package org.picketlink.certmgmt.rest;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import org.picketlink.Identity;
+import org.picketlink.certmgmt.model.MyUser;
+import org.picketlink.certmgmt.model.X509Certificatev1CreationRequest;
+import org.picketlink.certmgmt.model.X509Certificatev1DetailResponse;
+import org.picketlink.certmgmt.model.X509Certificatev1Response;
+import org.picketlink.certmgmt.model.enums.ResponseStatus;
+import org.picketlink.certmgmt.model.identity.IdentityModelManager;
+import org.picketlink.idm.IdentityManager;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,14 +36,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.picketlink.certmgmt.model.MyUser;
-import org.picketlink.certmgmt.model.X509Certificatev1CreationRequest;
-import org.picketlink.certmgmt.model.X509Certificatev1DetailResponse;
-import org.picketlink.certmgmt.model.X509Certificatev1Response;
-import org.picketlink.certmgmt.model.enums.ResponseStatus;
-import org.picketlink.certmgmt.model.identity.IdentityModelManager;
-import org.picketlink.idm.IdentityManager;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 @Stateless
 @Path("/X509v1Certificate")
@@ -49,13 +49,18 @@ public class X509Certificatev1Endpoint {
     @Inject
     private IdentityModelManager identityModelManager;
 
+    @Inject
+    private Identity identity;
+
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response create(X509Certificatev1CreationRequest request) throws Exception {
         X509Certificatev1Response response = new X509Certificatev1Response();
-        MyUser myUser = this.identityModelManager.findByKeyPassword(request.getKeyPassword(), identityManager);
+        MyUser myUser = (MyUser) this.identity.getAccount();
+
+        // now fix this. user always exists.
         if (myUser == null) {
             // Alias is not already registered
             myUser = this.identityModelManager.createMyUser(request);

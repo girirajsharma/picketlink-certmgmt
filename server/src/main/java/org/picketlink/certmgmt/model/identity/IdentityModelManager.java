@@ -17,22 +17,6 @@
  */
 package org.picketlink.certmgmt.model.identity;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import org.picketlink.certmgmt.CertificateGeneration;
 import org.picketlink.certmgmt.CertificateUtil;
 import org.picketlink.certmgmt.model.KeyHolder;
@@ -48,6 +32,21 @@ import org.picketlink.idm.credential.Password;
 import org.picketlink.idm.model.Account;
 import org.picketlink.idm.model.basic.BasicModel;
 import org.picketlink.idm.model.basic.Role;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 
 ///**
 // * <p>
@@ -209,4 +208,9 @@ public class IdentityModelManager {
     public MyUser findByKeyPassword(String keyPassword, IdentityManager identityManager) {
         return identityModelUtil.findUserByKeyPassword(keyPassword, identityManager);
     }
+
+    public MyUser findByLoginName(String loginName, IdentityManager identityManager) {
+        return identityModelUtil.findUserByKeyLoginName(loginName, identityManager);
+    }
+
 }

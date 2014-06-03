@@ -17,12 +17,12 @@
  */
 package org.picketlink.certmgmt.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 public class Person implements Serializable {
@@ -41,8 +41,14 @@ public class Person implements Serializable {
     private String keyPassword;
     private String subjectDN;
     private int numberOfDaysOfValidity;
+
+    @Column (columnDefinition = "TEXT")
     private String publicKey;
+
+    @Column (columnDefinition = "TEXT")
     private String privateKey;
+
+    @Column (columnDefinition = "TEXT")
     private String certificate;
 
     public long getId() {

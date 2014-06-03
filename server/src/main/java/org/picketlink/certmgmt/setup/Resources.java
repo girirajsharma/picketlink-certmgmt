@@ -16,13 +16,15 @@
  */
 package org.picketlink.certmgmt.setup;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.jboss.logging.Logger;
 import org.picketlink.annotations.PicketLink;
+import org.picketlink.authentication.web.BasicAuthenticationScheme;
+
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * <p>
@@ -30,13 +32,27 @@ import org.picketlink.annotations.PicketLink;
  * <p/>
  */
 public class Resources {
+
     @Produces
     @PicketLink
     @PersistenceContext(unitName = "picketlink-certmgmt")
     private EntityManager em;
 
+    @Inject
+    private BasicAuthenticationScheme basicAuthenticationScheme;
+
     @Produces
     public Logger produceLog(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
+    }
+
+    /**
+     * <p>Returns the HTTP Authentication Scheme that should be used to authenticate users.</p>
+     * @return
+     */
+    @Produces
+    @PicketLink
+    public BasicAuthenticationScheme produceHttpAuthenticationScheme() {
+        return this.basicAuthenticationScheme;
     }
 }

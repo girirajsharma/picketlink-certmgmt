@@ -17,13 +17,12 @@
  */
 package org.picketlink.certmgmt.model.identity;
 
-import java.util.List;
-
-import javax.enterprise.context.ApplicationScoped;
-
 import org.picketlink.certmgmt.model.MyUser;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.query.IdentityQuery;
+
+import javax.enterprise.context.ApplicationScoped;
+import java.util.List;
 
 @ApplicationScoped
 public class IdentityModelUtil {
@@ -41,4 +40,19 @@ public class IdentityModelUtil {
         }
         return null;
     }
+
+    public MyUser findUserByKeyLoginName(String loginName, IdentityManager identityManager) {
+        if (loginName == null) {
+            throw new IllegalArgumentException("Invalid loginName.");
+        }
+
+        IdentityQuery<MyUser> query = identityManager.createIdentityQuery(MyUser.class);
+        List<MyUser> result = query.setParameter(MyUser.LOGIN_NAME, loginName).getResultList();
+
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
+    }
+
 }
