@@ -26,6 +26,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.picketlink.certmgmt.model.enums.ResponseStatus;
 
 /**
  * Object for representing X509 Certificate version1 Creation response
@@ -38,16 +39,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class X509Certificatev1Response implements Serializable {
     private static final long serialVersionUID = -973696117016631846L;
 
-    private String state;
+    private ResponseStatus responseStatus;
     private int status;
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
 
     public int getStatus() {
         return status;
@@ -55,6 +48,14 @@ public class X509Certificatev1Response implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public ResponseStatus getResponseStatus() {
+        return responseStatus;
+    }
+
+    public void setResponseStatus(ResponseStatus responseStatus) {
+        this.responseStatus = responseStatus;
     }
 
 }

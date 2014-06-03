@@ -22,12 +22,12 @@ import java.security.PrivilegedAction;
 import java.security.Provider;
 import java.security.Security;
 
-///**
-// * Privileged Blocks
-// *
-// * @author anil saldhana
-// * @since Aug 16, 2012
-// */
+/**
+ * Privileged Blocks
+ *
+ * @author anil saldhana
+ * @since Aug 16, 2012
+ */
 class SecurityActions {
 
     static void addProvider(final Provider provider) {

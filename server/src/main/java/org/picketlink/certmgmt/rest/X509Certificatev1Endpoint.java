@@ -18,10 +18,7 @@
 package org.picketlink.certmgmt.rest;
 
 import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.Certificate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,23 +31,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.picketlink.certmgmt.CertificateGeneration;
-import org.picketlink.certmgmt.CertificateUtil;
-import org.picketlink.certmgmt.api.PicketLinkCertificateManagement;
+import org.picketlink.certmgmt.model.MyUser;
 import org.picketlink.certmgmt.model.X509Certificatev1CreationRequest;
 import org.picketlink.certmgmt.model.X509Certificatev1DetailResponse;
 import org.picketlink.certmgmt.model.X509Certificatev1Response;
+import org.picketlink.certmgmt.model.enums.ResponseStatus;
+import org.picketlink.certmgmt.model.identity.IdentityModelManager;
 import org.picketlink.idm.IdentityManager;
-import org.picketlink.idm.model.Attribute;
-import org.picketlink.idm.model.basic.BasicModel;
-import org.picketlink.idm.model.basic.User;
 
-///**
-// * Endpoint for User Account Registration
-// * 
-// * @author Giriraj Sharma
-// * @since May 05, 2014
-// */
 @Stateless
 @Path("/X509v1Certificate")
 public class X509Certificatev1Endpoint {
@@ -59,20 +47,7 @@ public class X509Certificatev1Endpoint {
     private IdentityManager identityManager;
 
     @Inject
-    private PicketLinkCertificateManagement picketLinkCertificateManagement;
-
-    @Inject
-    private CertificateGeneration certificateGeneration;
-
-    @Inject
-    private CertificateUtil certificateUtil;
-
-    // /**
-    // * Register an user account
-    // *
-    // * @param request
-    // * @return
-    // */
+    private IdentityModelManager identityModelManager;
 
     @POST
     @Path("/create")
@@ -80,85 +55,38 @@ public class X509Certificatev1Endpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response create(X509Certificatev1CreationRequest request) throws Exception {
         X509Certificatev1Response response = new X509Certificatev1Response();
-
-        String alias = request.getAlias();
-        String subjectDN = request.getSubjectDN();
-        String keyPassword = request.getKeyPassword();
-        String saltedPassword = certificateUtil.saltedHmacMD5("salt", (new String(keyPassword)).getBytes());
-        String numberOfDaysOfValidity = request.getNumberOfDaysOfValidity();
-        int version = 1;
-
-        User user = BasicModel.getUser(identityManager, keyPassword);
-        if (user == null) {
+        MyUser myUser = this.identityModelManager.findByKeyPassword(request.getKeyPassword(), identityManager);
+        if (myUser == null) {
             // Alias is not already registered
-            user = new User(keyPassword);
-
-            user.setAttribute(new Attribute<String>("alias", alias));
-            user.setAttribute(new Attribute<String>("subjectDN", subjectDN));
-            user.setAttribute(new Attribute<String>("password", saltedPassword));
-            user.setAttribute(new Attribute<String>("numberOfDaysOfValidity", numberOfDaysOfValidity));
-
-            KeyPair keyPair = certificateGeneration.generateKeyPair("RSA");
-            String encodedPrivateKey = certificateUtil.getEncodedKey(keyPair.getPrivate());
-            String encodedPublicKey = certificateUtil.getEncodedKey(keyPair.getPublic());
-
-            user.setAttribute(new Attribute<String>("publicKey", encodedPublicKey));
-            user.setAttribute(new Attribute<String>("privateKey", encodedPrivateKey));
-
-            Certificate cert = picketLinkCertificateManagement.create(keyPair, Integer.parseInt(numberOfDaysOfValidity),
-                    subjectDN, version);
-            String encodedCert = certificateUtil.getEncodedCertificate(cert);
-            user.setAttribute(new Attribute<String>("X509v1Certificate", encodedCert));
-            this.identityManager.add(user);
-            // this.identityManager.updateCredential(user, new Password(request.getPassword()));
-
+            myUser = this.identityModelManager.createMyUser(request);
+            this.identityManager.add(myUser);
             response.setStatus(200);
-            response.setState("CREATED");
+            response.setResponseStatus(ResponseStatus.CREATED);
         } else {
             // Alias is already registered
             response.setStatus(400);
-            response.setState("FAILED");
+            response.setResponseStatus(ResponseStatus.FAILED);
         }
-
         return response;
     }
 
     @GET
-    @Path("/{keyPassword}/{alias}")
+    @Path("/{keyPassword}")
     @Produces(MediaType.APPLICATION_JSON)
-    public X509Certificatev1DetailResponse get(@PathParam("keyPassword") String keyPassword, @PathParam("alias") String alias)
-            throws InvalidKeyException, NoSuchAlgorithmException {
+    public X509Certificatev1DetailResponse get(@PathParam("keyPassword") String keyPassword) throws InvalidKeyException,
+            NoSuchAlgorithmException {
         X509Certificatev1DetailResponse response = new X509Certificatev1DetailResponse();
-        User user = BasicModel.getUser(identityManager, keyPassword);
-        if (user == null) {
+        // Agent myUser = BasicModel.getAgent(identityManager, keyPassword);
+        MyUser myUser = this.identityModelManager.findByKeyPassword(keyPassword, identityManager);
+        if (myUser == null) {
             response.setStatus(400);
+            response.setResponseStatus(ResponseStatus.FAILED);
             return response;
         }
-
-        String trueAlias = String.valueOf(user.getAttribute("alias"));
-        if (!alias.equals(trueAlias)) {
-            response.setStatus(400);
-            return response;
-        }
-
+        response = this.identityModelManager.getMyUser(myUser, keyPassword);
         response.setStatus(200);
-        response.setSubjectDN(String.valueOf(user.getAttribute("subjectDN")));
-        response.setAlias(String.valueOf(user.getAttribute("alias")));
-        response.setKeyPassword(keyPassword);
-        response.setNumberOfDaysOfValidity(String.valueOf(user.getAttribute("validity")));
-
-        String encodedPublicKey = String.valueOf(user.getAttribute("publicKey"));
-        Key publicKey = certificateUtil.getDecodedKey(encodedPublicKey);
-        String encodedPrivateKey = String.valueOf(user.getAttribute("privateKey"));
-        Key privateKey = certificateUtil.getDecodedKey(encodedPrivateKey);
-
-        String encodedCertificate = String.valueOf(user.getAttribute("publicKey"));
-        Certificate certificate = certificateUtil.getDecodedCertificate(encodedCertificate);
-        response.setPrivateKey(privateKey);
-        response.setPublicKey(publicKey);
-        response.setX509Certificatev1(certificate);
+        response.setResponseStatus(ResponseStatus.FETCHED);
         return response;
-
     }
 
     @POST
@@ -167,40 +95,17 @@ public class X509Certificatev1Endpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response update(X509Certificatev1CreationRequest request) throws Exception {
         X509Certificatev1Response response = new X509Certificatev1Response();
-        String alias = request.getAlias();
-        String subjectDN = request.getSubjectDN();
-        String keyPassword = request.getKeyPassword();
-        String numberOfDaysOfValidity = request.getNumberOfDaysOfValidity();
-        int version = 1;
-
-        User user = BasicModel.getUser(identityManager, keyPassword);
-        if (user == null) {
+        MyUser myUser = this.identityModelManager.findByKeyPassword(request.getKeyPassword(), identityManager);
+        if (myUser == null) {
             response.setStatus(400);
-            return response;
+            response.setResponseStatus(ResponseStatus.FAILED);
         }
 
-        user.setAttribute(new Attribute<String>("alias", alias));
-        user.setAttribute(new Attribute<String>("subjectDN", subjectDN));
-        // user.setAttribute(new Attribute<String>("password", saltedPassword));
-        user.setAttribute(new Attribute<String>("numberOfDaysOfValidity", numberOfDaysOfValidity));
-
-        KeyPair keyPair = certificateGeneration.generateKeyPair("RSA");
-        String encodedPrivateKey = certificateUtil.getEncodedKey(keyPair.getPrivate());
-        String encodedPublicKey = certificateUtil.getEncodedKey(keyPair.getPublic());
-
-        user.setAttribute(new Attribute<String>("publicKey", encodedPublicKey));
-        user.setAttribute(new Attribute<String>("privateKey", encodedPrivateKey));
-
-        Certificate cert = picketLinkCertificateManagement.create(keyPair, Integer.parseInt(numberOfDaysOfValidity), subjectDN,
-                version);
-        String encodedCert = certificateUtil.getEncodedCertificate(cert);
-        user.setAttribute(new Attribute<String>("X509v1Certificate", encodedCert));
-
-        this.identityManager.update(user);
-        // this.identityManager.updateCredential(user, new Password(request.getPassword()));
-
+        // Alias is registered
+        myUser = this.identityModelManager.createMyUser(request);
+        this.identityManager.update(myUser);
         response.setStatus(200);
-        response.setState("UPDATED");
+        response.setResponseStatus(ResponseStatus.UPDATED);
         return response;
     }
 
@@ -209,14 +114,15 @@ public class X509Certificatev1Endpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public X509Certificatev1Response delete(@PathParam("keyPassword") String keyPassword) throws Exception {
         X509Certificatev1Response response = new X509Certificatev1Response();
-        User user = BasicModel.getUser(identityManager, keyPassword);
-        if (user == null) {
+        MyUser myUser = this.identityModelManager.findByKeyPassword(keyPassword, identityManager);
+        if (myUser == null) {
             response.setStatus(400);
+            response.setResponseStatus(ResponseStatus.FAILED);
             return response;
         }
-        picketLinkCertificateManagement.delete(keyPassword);
+        this.identityManager.remove(myUser);
         response.setStatus(200);
-        response.setState("DELETED");
+        response.setResponseStatus(ResponseStatus.DELETED);
         return response;
     }
 }

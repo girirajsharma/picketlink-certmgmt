@@ -71,4 +71,8 @@ public class X509Certificatev1CreationRequest implements Serializable {
     public void setKeyPassword(String keyPassword) {
         this.keyPassword = keyPassword;
     }
+
+    public boolean isValid() {
+        return this.alias != null && this.subjectDN != null && this.numberOfDaysOfValidity != null && this.keyPassword != null;
+    }
 }

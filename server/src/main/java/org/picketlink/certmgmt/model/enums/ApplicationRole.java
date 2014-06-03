@@ -15,19 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.picketlink.certmgmt.setup;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+package org.picketlink.certmgmt.model.enums;
 
 /**
- * Activate JAX-RS
+ * <p>
+ * Roles supported by this application.
+ * </p>
  *
  * @author Giriraj Sharma
- * @since May 20, 2014
  */
-@ApplicationPath("/")
-@ApplicationScoped
-public class RESTActivation extends Application {
+
+public enum ApplicationRole {
+    ADMINISTRATOR, USER;
 }
