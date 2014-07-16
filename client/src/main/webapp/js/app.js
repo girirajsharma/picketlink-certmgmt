@@ -13,11 +13,14 @@ picketlinkCertMgmtApp.config([ '$routeProvider', function($routeProvider) {
 		controller : 'ViewCertificateController'
 	}).when('/view/:keyPassword', {
 		templateUrl : 'jsp/picketlink-cert.html',
-		controller : 'GetCertificateController'
+		controller : 'DeleteCertificateController'
 	}).when('/edit', {
 		templateUrl : 'jsp/picketlink-cert-edit.html',
 		controller : 'UpdateCertificateController'
-	}).otherwise({
+	}).when('/load', {
+		templateUrl : 'jsp/picketlink-cert-load.html',
+		controller : 'LoadCertificateController'
+	})otherwise({
 		redirectTo : '/'
 	});
 } ]);

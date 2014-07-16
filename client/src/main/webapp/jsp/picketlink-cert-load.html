@@ -1,0 +1,41 @@
+<h1>Load X509 Version1 Certificate from KeyStore</h1>
+               <form  name="userForm" role="form" ng-controller="CreateCertificateController" ng-submit="create()" invalidate>
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+                            
+                            <div class="form-group">
+                                    <label>KeyStore URL</label>
+                                    <input ng-class="{error: userForm.keyStoreURL.$dirty && userForm.keyStoreURL.$invalid}" class="form-control" type="text" placeholder="KeyStore URL" name="keyStoreURL" ng-model="keyStoreURL" regex-validate="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/" regex-validate-flags="i" required ng-focus/>
+                                    <div class="error-container" ng-show="userForm.keyStoreURL.$dirty && userForm.keyStoreURL.$invalid && !userForm.keyStoreURL.$focused">
+                                        <span style="color:red" ng-show="userForm.keyStoreURL.$error.required">Your KeyStore URL is required.</span>
+                                        <span style="color:red" ng-show="userForm.keyStoreURL.$error.regexValidate">Please enter a valid KeyStore URL.</span>
+                                    </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                    <label>KeyStore Password</label>
+                                    <input ng-class="{error: userForm.keyStorePassword.$dirty && userForm.keyStorePassword.$invalid}" class="form-control" type="text" placeholder="KeyStore Password" name="keyStorePassword" ng-model="keyStorePassword" required ng-focus/>
+                                    <div class="error-container" ng-show="userForm.keyStorePassword.$dirty && userForm.keyStorePassword.$invalid && !userForm.keyStorePassword.$focused">
+                                        <span style="color:red" ng-show="userForm.keyStorePassword.$error.required">Your KeyStore Password is required.</span>
+                                    </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                    <label>Alias</label>
+                                    <input ng-class="{error: userForm.alias.$dirty && userForm.alias.$invalid}" class="form-control" type="text" placeholder="Alias" name="alias" ng-model="alias" ng-minlength=3 ng-maxlength=20 required ng-focus />
+                                    <div class="error-container" ng-show="userForm.alias.$dirty && userForm.alias.$invalid  && !userForm.alias.$focused">
+                                        <span style="color:red" ng-show="userForm.alias.$error.required">Your alias is required.</small>
+                                        <span style="color:red" ng-show="userForm.alias.$error.minlength">Your alias is required to be at least 3 characters.</span>
+                                        <span style="color:red" ng-show="userForm.alias.$error.maxlength">Your alias cannot be longer than 20 characters.</span>
+                                    </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                    <label>Key Password</label>
+                                    <input ng-class="{error: userForm.keyPassword.$dirty && userForm.keyPassword.$invalid}" class="form-control" type="text" placeholder="Key Password" name="keyPassword" ng-model="keyPassword" required ng-focus />
+                                    <div class="error-container" ng-show="userForm.keyPassword.$dirty && userForm.keyPassword.$invalid && !userForm.keyPassword.$focused">
+                                        <span style="color:red" ng-show="userForm.keyPassword.$error.required">Your key Password is required.</span>
+                                    </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">LOAD</button>
+                            <button type="reset" class="btn btn-primary">Reset</button>
+                       </form>

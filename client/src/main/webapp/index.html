@@ -1,93 +1,148 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="picketlinkCertMgmtApp">
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if IE 9]><html class="ie9"><![endif]-->
+<!--[if gt IE 9]><!-->
+<html>
+<!--<![endif]-->
   <head>
-    <meta charset="utf-8">
-    <title>PicketLink Certificate Management</title>
+    <title>Picketlink - CertMgmt</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PicketLink OAuth Provider">
-    <meta name="author" content="PicketLink Open Source">
-
-    <!-- Le styles -->
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link href="jsp/twitter-bootstrap-v2/docs/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="jsp/twitter-bootstrap-v2/docs/assets/css/example-fluid-layout.css" rel="stylesheet">
-    <link href="jsp/twitter-bootstrap-v2/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <link href="css/patternfly.css" rel="stylesheet" media="screen, print">
+    <link href="css/tests.css" rel="stylesheet" media="screen, print">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="../components/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="../components/respond/dest/respond.min.js"></script>
     <![endif]-->
-
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="twitter-bootstrap-v2/docs/examples/images/favicon.ico">
-    <link rel="apple-touch-icon" href="twitter-bootstrap-v2/docs/examples/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="twitter-bootstrap-v2/docs/examples/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="twitter-bootstrap-v2/docs/examples/images/apple-touch-icon-114x114.png">
-    
-    <script src="lib/jquery/jquery-1.10.2.js"></script>
+    <!-- IE8 requires jQuery and Bootstrap JS to load in head to prevent rendering bugs -->
+    <!-- IE8 requires jQuery v1.x -->
+    <script src="lib/jquery/jquery-1.10.2.min.js"></script>
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+    <script src="lib/patternfly/patternfly.min.js"></script>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular/angular-animate.js"></script>
     <script src="lib/angular/angular-resource.js"></script>
     <script src="lib/angular/angular-route.js"></script>
   </head>
   <body>
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="picketlink.html"><img src="http://design.jboss.org/picketlink/logo/images/picketlink_logo_100x.png" width="111" height="30" alt="PicketLink logo" /></a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="picketlink.html">Home</a></li>
-            </ul>
-            <p class="navbar-text pull-right">Not Logged in!</a></p>
-          </div><!--/.nav-collapse -->
+          <nav class="navbar navbar-default navbar-pf" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+                <img src="images/brand.svg" alt="PatternFly" />
+              </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-utility">
+                <li>
+                  <a href="#">Status</a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="pficon pficon-user"></span>
+                    Brian Johnson <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#">Link</a>
+                    </li>
+                    <li>
+                      <a href="#">Another link</a>
+                    </li>
+                    <li>
+                      <a href="#">Something else here</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="dropdown-submenu">
+                      <a tabindex="-1" href="#">More options</a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a href="#">Link</a>
+                        </li>
+                        <li>
+                          <a href="#">Another link</a>
+                        </li>
+                        <li>
+                          <a href="#">Something else here</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li>
+                          <a href="#">Separated link</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                          <a href="#">One more separated link</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a href="#">One more separated link</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-primary">
+                <li>
+                  <a href="#">Home</a>
+                </li>
+                <li>
+                  <a href="#">About</a>
+                </li>
+                <li>
+                  <a href="#">News</a>
+                </li>
+                <li>
+                  <a href="#">Getting Started</a>
+                </li>
+                <li>
+                  <a href="#">Documentation</a>
+                </li>
+                <li>
+                  <a href="#">Get Help</a>
+                </li>
+                <li>
+                  <a href="#">Source Code</a>
+                </li>
+                <li>
+                  <a href="#">Testimonials</a>
+                </li>
+                <li>
+                  <a href="#">Join Us</a>
+                </li>
+                <li>
+                  <a href="#">Follow Us</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+            <div class="page-header">
+                    <h1>PicketLink Certificate Management System</h1>
+            </div>
+            <div class="view-container">
+                <div ng-view class="view-frame"></div>
+            </div>
+        </div><!-- /col -->
+      </div><!-- /row -->
+    </div><!-- /container -->
+        
+        <hr>
+        <div class="footer">
+          <h4>&nbsp;&nbsp;&copy; PicketLink, Open Source Project from JBoss Community.</h4>
         </div>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Register</li>
-              <li class="active"><a href="picketlink-login.html">Login</a></li>
-              <li><a href="picketlink-accnt-reg.html">Register</a></li>
-              <li class="nav-header">Help</li>
-              <li><a href="#">Quickstarts</a></li>
-           </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="view-container">
-            <div ng-view class="view-frame"></div>
-        </div>
-      </div>
-    </div>
     
     <!-- Le javascript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/jquery.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-transition.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-alert.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-modal.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-dropdown.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-tab.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-tooltip.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-popover.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-button.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-collapse.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-carousel.js"></script>
-    <script src="jsp/twitter-bootstrap-v2/docs/assets/js/bootstrap-typeahead.js"></script>
-    
     <script src="js/app.js"></script>
-    <script src="js/animations.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/filters.js"></script>

@@ -1,27 +1,22 @@
-        <div class="span9">
-          <div class="leaderboard">
-            <h1>PicketLink Certificate Management</h1>
-               <form  name="userForm" ng-controller="CertificateController" ng-submit="viewCertificate()" invalidate>
-                    <fieldset>
-                        <legend> Create X509 Version1 Certificate</legend>
-                            <div class="row">
-                                <div class="large-12 columns">
+<h1>View X509 Version1 Certificate</h1>
+               <form  name="userForm" role="form" ng-controller="CreateCertificateController" ng-submit="create()" invalidate>
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+                            <div class="form-group">
                                     <label>Alias</label>
-                                    <input ng-class="{error: userForm.alias.$dirty && userForm.alias.$invalid}" type="text" placeholder="KeyPassword" name="alias" ng-model="keyPassword"  required ng-focus />
+                                    <input ng-class="{error: userForm.alias.$dirty && userForm.alias.$invalid}" class="form-control" type="text" placeholder="Alias" name="alias" ng-model="alias" ng-minlength=3 ng-maxlength=20 required ng-focus />
                                     <div class="error-container" ng-show="userForm.alias.$dirty && userForm.alias.$invalid  && !userForm.alias.$focused">
-                                        <small class="error" ng-show="userForm.alias.$error.required">Your keyPassword is required.</small>
+                                        <small class="error" ng-show="userForm.alias.$error.required">Your alias is required.</small>
+                                        <small class="error" ng-show="userForm.alias.$error.minlength">Your alias is required to be at least 3 characters</small>
+                                        <small class="error" ng-show="userForm.alias.$error.maxlength">Your alias cannot be longer than 20 characters</small>
                                     </div>
-                                </div>
                             </div>
-                            <button type="submit" class="btn btn-success" ng-disabled="userForm.$invalid">Submit</button>                        
-                            </fieldset>
+                            <div class="form-group">
+                                    <label>Key Password</label>
+                                    <input ng-class="{error: userForm.keyPassword.$dirty && userForm.keyPassword.$invalid}" class="form-control" type="text" placeholder="Key Password" name="keyPassword" ng-model="keyPassword" required ng-focus />
+                                    <div class="error-container" ng-show="userForm.keyPassword.$dirty && userForm.keyPassword.$invalid && !userForm.keyPassword.$focused">
+                                        <small class="error" ng-show="userForm.keyPassword.$error.required">Your key Password is required.</small>
+                                    </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+                            <button type="reset" class="btn btn-primary">Reset</button>
                        </form>
-                    </div>
-                    </div>
-          <div class="row-fluid">
-          </div><!--/row-->
-          <hr>
-     <footer>
-        <p>&copy; PicketLink, Open Source Project from JBoss Community.</p>
-      </footer>
-    </div><!--/.fluid-container-->

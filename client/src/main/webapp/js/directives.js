@@ -24,3 +24,25 @@ picketlinkCertMgmtDirectives.directive('ngFocus', [ function() {
 		}
 	};
 } ]);
+
+picketlinkCertMgmtDirectives.directive('regexValidate', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+            var flags = attr.regexValidateFlags || '';
+            var regex = new RegExp(attr.regexValidate, flags);            
+            
+            ctrl.$parsers.unshift(function(value) {
+                var valid = regex.test(value);
+                ctrl.$setValidity('regexValidate', valid);
+                return valid ? value : undefined;
+            });
+            
+            ctrl.$formatters.unshift(function(value) {
+                ctrl.$setValidity('regexValidate', regex.test(value));
+                return value;
+            });
+        }
+    };
+});

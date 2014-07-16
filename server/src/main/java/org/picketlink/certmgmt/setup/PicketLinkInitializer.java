@@ -21,15 +21,15 @@
  */
 package org.picketlink.certmgmt.setup;
 
-import org.picketlink.certmgmt.model.MyUser;
-import org.picketlink.idm.IdentityManager;
-import org.picketlink.idm.PartitionManager;
-import org.picketlink.idm.credential.Password;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+
+import org.picketlink.certmgmt.model.MyUser;
+import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.PartitionManager;
+import org.picketlink.idm.credential.Password;
 
 /**
  * @author Pedro Igor

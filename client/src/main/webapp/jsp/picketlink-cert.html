@@ -1,54 +1,41 @@
-        <div class="span9" ng-show="state">
-          <div class="leaderboard">
-            <h1>PicketLink Certificate Management</h1>
-               <form  name="userForm" ng-controller="ViewCertificateController" ng-submit="deleteCertificate()" invalidate>
-                    <fieldset>
-                        <legend> Create X509 Version1 Certificate</legend>
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <p class="text-primary">Label : <p class="text-muted">{{Certificate.alias}}</p></p>
-                                </div>
+<h1>X509 Version1 Certificate</h1>
+               <form  name="userForm" role="form" ng-show="state" ng-controller="DeleteCertificateController" ng-submit="deleteCertificate()" invalidate>
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+                            <div class="form-group">
+                                    <label>Alias</label>
+                                    <input class="form-control" type="text" name="alias" ng-model="Certificate.alias" disabled/>
                             </div>
                             
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <p class="text-primary">Subject DN : <p class="text-muted">{{Certificate.subjectDN}}</p></p>
-                                </div>
+                            <div class="form-group">
+                                    <label>Subject DN</label>
+                                    <input class="form-control" type="text"  name="subjectDN" ng-model="Certificate.subjectDN" disabled/>
                             </div>
                             
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <p class="text-primary">Key Password : <p class="text-muted">{{Certificate.keyPassword}}</p></p>
-                                </div>
+                            <div class="form-group">
+                                    <label>Key Password</label>
+                                    <input class="form-control" type="text"  name="keyPassword" ng-model="Certificate.keyPassword" disabled/>
                             </div>
                             
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <p class="text-primary">Number of Validity  Days : <p class="text-muted">{{Certificate.validity}}</p></p>
-                                </div>
+                            <div class="form-group">
+                                    <label>Number of Days of Validity</label>
+                                    <input class="form-control" type="number" name="validity" ng-model="Certificate.numberOfDaysOfValidity" disabled/>
                             </div>
                             
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <p class="text-primary">KeyPair : <p class="text-muted">{{Certificate.keyPair}}</p></p>
-                                </div>
+                            <div class="form-group">
+                                    <label>Public Key</label>
+                                    <input class="form-control" type="number" name="publicKey" ng-model="Certificate.publicKey" disabled/>
                             </div>
                             
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <p class="text-primary">X509v1Certificate : <p class="text-muted">{{Certificate.certificate}}</p></p>
-                                </div>
+                            <div class="form-group">
+                                    <label>Private Key</label>
+                                    <input class="form-control" type="number" name="privateKkey" ng-model="Certificate.privateKey" disabled/>
                             </div>
-                            <a class="btn btn-success btn-large" href="#/edit">Edit</a>
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </fieldset>
+                            
+                            <div class="form-group">
+                                    <label>X509 Version-1 Certificate</label>
+                                    <input class="form-control" type="number" name="x509v1Certificate" ng-model="Certificate.X509v1Certificate" disabled/>
+                            </div>
+                            <button type="button" ng-show="state" class="btn btn-primary btn-lg" onClick="editCertificate()">EDIT</button>
+                            <button type="submit" ng-show="state" class="btn btn-danger btn-lg">DELETE</button>
+                            <a type="button" ng-show="!state" class="btn btn-primary btn-lg" href="/">HOME</a>
                        </form>
-                    </div>
-                    </div>
-          <div class="row-fluid">
-          </div><!--/row-->
-          <hr>
-      <footer>
-        <p>&copy; PicketLink, Open Source Project from JBoss Community.</p>
-      </footer>
-    </div><!--/.fluid-container-->
